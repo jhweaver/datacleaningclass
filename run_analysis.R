@@ -44,9 +44,7 @@ blank_row = tdata
 
 for (subject in unique(fdata$subject)) {
     for (s2 in subject) {
-print(s2)
         for (label in unique(fdata$label)) {
-print(label) 
             ss = fdata[fdata$subject==s2 & fdata$label==label,]
             new_row = c(subject=s2, label=label)
             #new_row = blank_row
@@ -54,14 +52,11 @@ print(label)
             #new_row['label']=label
             for (cn in colnames(blank_row)) {
                 if (!(cn %in% c("label","subject","activity_label"))) {
-#print(cn)
                     #new_row[cn] = mean(ss[cn][[1]],na.rm=TRUE)
                     new_row = c(new_row, cn=mean(ss[cn][[1]],na.rm=TRUE))
                 }
             }
-#print(new_row)
-last_row=new_row
-            df = as.data.frame(as.list(last_row), stringsAsFactors = FALSE)
+            df = as.data.frame(as.list(new_row), stringsAsFactors = FALSE)
             tdata = rbind(tdata,df)
             #tdata = rbind(tdata,new_row)
         }
@@ -77,7 +72,7 @@ for (n in colnames(blank_row)) {
 }
 
 for (i in (3:dim(tdata)[2])) {
-  tdata[,i] = as.numeric(tdata[,i])
+    tdata[,i] = as.numeric(tdata[,i])
 }
 
 tdata
